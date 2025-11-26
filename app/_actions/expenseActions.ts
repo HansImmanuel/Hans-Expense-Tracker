@@ -73,7 +73,7 @@ export async function deleteExpense(expenseId: number) {
     if (!user) return;
 
     const expense = await db.select().from(expensestable).where(eq(expensestable.id, expenseId));
-    if (expense.length === 0) return;
+    if (expense.length === 0 || !expense[0].budgetID) return;
 
     const budget = await db.select().from(budgetTable).where(and(
         eq(budgetTable.id, expense[0].budgetID),
